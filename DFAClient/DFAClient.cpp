@@ -115,7 +115,7 @@ int main()
 
     matplot::plot(dfa.S_log, dfa.F_log, "o");
     matplot::hold(matplot::on);
-    matplot::plot(dfa.S_log, dfa.Reg_Line, "-");
+    matplot::plot(dfa.S_log, dfa.Reg_Line, "--");
     matplot::show();
 }
 
