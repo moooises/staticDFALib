@@ -1,0 +1,5 @@
+﻿  DFALib.cpp
+C:\Users\mo_oi\source\repos\staticDFALib\DFALib\DFALib.cpp(190,19): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\mo_oi\source\repos\staticDFALib\DFALib\DFALib.cpp(243,29): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\mo_oi\source\repos\staticDFALib\DFALib\DFALib.cpp(254,4): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  DFALib.vcxproj -> C:\Users\mo_oi\source\repos\staticDFALib\x64\Debug\DFALib.lib
