@@ -32,6 +32,7 @@ namespace DFALib
 		static std::vector<double> linspace(const T start_in, const T end_in, const int num_in);
 
 		// https://stackoverflow.com/questions/57944012/how-to-write-a-fast-code-in-c-compared-to-numpy-logspace-function
+		// Aplicamos un floor en le vector resultado
 		static std::vector<int> logspace(const int start_in, const int end_in, const int num_in);
 
 		// Used in polynomial_fit

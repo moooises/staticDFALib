@@ -16,7 +16,14 @@ int main()
 
     std::vector<double> data;
     std::fstream newfile;
-    newfile.open("C:/Users/mo_oi/source/repos/staticDFALib/DFAClient/Multifractal.txt");
+    //std::string file = "C:/Users/mo_oi/source/repos/staticDFALib/DFAClient/Multifractal.txt";
+    //std::string file = "C:/Users/mo_oi/source/repos/staticDFALib/DFAClient/O3_2017.dat";
+    //std::string file = "C:/Users/mo_oi/source/repos/staticDFALib/DFAClient/O3_2018_reminder.dat";
+    std::string file = "C:/Users/mo_oi/source/repos/staticDFALib/DFAClient/O3_2019.dat";
+
+
+    //newfile.open();
+
     if (newfile.is_open())
     {
         std::string tp;
@@ -26,8 +33,31 @@ int main()
         }
     }
     newfile.close();
-    std::vector<int> scales = { 16, 32, 64, 128, 256, 512, 1024 };
 
+    std::cout << data.size() << std::endl;
+    if (data.size() == 1 || data.size() == 0)
+    {
+        data.clear();
+        newfile.open(file);
+        if (newfile.is_open())
+        {
+            std::string tp;
+            while (std::getline(newfile, tp))
+            {
+                data.push_back(std::stold(tp));
+            }
+        }
+        newfile.close();
+    }
+
+    std::cout << "Data" << std::endl;
+    std::for_each(data.begin(), data.end(), [](double n) {std::cout << n << " "; });
+
+    //std::vector<int> scales = { 16, 32, 64, 128, 256, 512, 1024 };
+    //std::vector<int> scales = { 10, 11, 12, 14, 15, 17, 19, 22, 24, 27, 31, 34, 38, 43, 48, 54, 61, 68, 76, 86, 96, 107, 120, 135, 151, 169, 190, 213, 238, 267, 299, 335, 375, 420, 470, 527, 590, 661, 740, 829, 929, 1040, 1165, 1305, 1462, 1637, 1834, 2054, 2300, 2576, 2885, 3231, 3619, 4053, 4540, 5084, 5694, 6377, 7143, 7999 };
+    //std::vector<int> scales = { 10, 11, 12, 13, 15, 17, 19, 21, 24, 27, 30, 33, 37, 42, 47, 52, 59, 66, 73, 82, 92, 103, 115, 128, 144, 161, 180, 201, 224, 251, 280, 313, 350, 391, 438, 489, 547, 611, 683, 763, 853, 953, 1066, 1191, 1331, 1488, 1663, 1858, 2077, 2321, 2594, 2899, 3240, 3621, 4047, 4523, 5054, 5649, 6313, 7055 };
+    //std::vector<int> scales = { 10, 11, 12, 13, 15, 17, 19, 21, 24, 27, 30, 33, 37, 42, 47, 52, 59, 66, 73, 82, 92, 103, 115, 128, 144, 161, 180, 201, 224, 251, 280, 313, 350, 391, 438, 489, 547, 611, 683, 763, 853, 953, 1066, 1191, 1331, 1488, 1663, 1858, 2077, 2321, 2594, 2899, 3240, 3621, 4047, 4523, 5054, 5649, 6313, 7055 };
+    std::vector<int> scales = { 10, 11, 12, 13, 15, 17, 19, 21, 24, 27, 30, 33, 37, 42, 47, 52, 59, 66, 73, 82, 92, 103, 115, 128, 144, 161, 180, 201, 224, 251, 280, 313, 350, 391, 438, 489, 547, 611, 683, 763, 853, 953, 1066, 1191, 1331, 1488, 1663, 1858, 2077, 2321, 2594, 2899, 3240, 3621, 4047, 4523, 5054, 5649, 6313, 7055 };
 
     std::vector<double> data_test;
     std::vector<double> data_test_flip;
@@ -40,6 +70,8 @@ int main()
     copy(R_flip.begin(), R_flip.begin() + 100, std::back_inserter(data_test_flip));
 
 
+    // Test DFA
+
     std::cout << "Normal" << std::endl;
     std::for_each(data_test.begin(), data_test.end(), [](double n) {std::cout << n << " "; });
     std::cout << std::endl;
@@ -47,7 +79,24 @@ int main()
     std::for_each(data_test_flip.begin(), data_test_flip.end(), [](double n) {std::cout << n << " "; });
     std::cout << std::endl;
 
-    struct DFALib::DFA_values dfa = DFALib::XDFA::DFA(data, 1, scales);
+    struct DFALib::DFA_values dfa = DFALib::XDFA::DFA(data, 1,scales);
+
+
+    matplot::plot(dfa.S_log, dfa.F_log, "o");
+    matplot::hold(matplot::on);
+    matplot::plot(dfa.S_log, dfa.Reg_Line, "--");
+    matplot::show();
+    
+
+    // Test logspace
+
+    //std::vector<int> logspaced = DFALib::XDFA::logspace(16, 8000, 60);
+
+    //std::cout << "Scales" << std::endl;
+    //std::for_each(logspaced.begin(), logspaced.end(), [](double x) {std::cout << " " << x << std::endl; });
+    ////std::for_each(logspaced.begin(), logspaced.end(), [](int& x) {x = static_cast<int>(pow(10, x)); }); // pow returns always double
+    //std::cout << "Scales end" << std::endl;
+
 
 
     //
@@ -113,11 +162,8 @@ int main()
     //std::cout << std::endl;
 
 
-    matplot::plot(dfa.S_log, dfa.F_log, "o");
-    matplot::hold(matplot::on);
-    matplot::plot(dfa.S_log, dfa.Reg_Line, "--");
-    matplot::show();
-}
+
+    }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
 // Debug program: F5 or Debug > Start Debugging menu

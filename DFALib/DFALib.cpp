@@ -101,17 +101,33 @@ namespace DFALib
 
 	std::vector<int> XDFA::logspace(const int start_in, const int end_in, const int num_in)
 	{
-		const double exp_scale = (end_in - start_in) / (num_in - 1);
-		std::vector<int> logspaced;
-		logspaced.reserve(num_in);
-		for (int i = 0; i < num_in; i++)
-		{
-			logspaced.push_back(static_cast<int>(i * exp_scale)); // this used to be floor(), but floor return double ¿?¿?¿?¿
-		}
+		//const double exp_scale = (end_in - start_in) / (num_in - 1);
+		//std::vector<int> logspaced;
+		//logspaced.reserve(num_in);
+		//for (int i = 0; i < num_in; i++)
+		//{
+		//	logspaced.push_back(static_cast<int>(i * exp_scale)); // this used to be floor(), but floor return double ¿?¿?¿?¿
+		//}
 
-		std::for_each(logspaced.begin(), logspaced.end(), [](int& x) {x = static_cast<int>(pow(10, x)); }); // pow returns always double
+		//std::for_each(logspaced.begin(), logspaced.end(), [](int& x) {x = static_cast<int>(pow(10, x)); }); // pow returns always double
+
+		//return logspaced;
+
+		double diff = static_cast<double>(end_in) - static_cast<double>(start_in);
+		//std::cout << "Diff: " << diff << std::endl;
+		double ratio = pow(static_cast<double>(end_in), (1.0 / (static_cast<double>(num_in) - 1.0)));
+		//std::cout << "Ratio: " << ratio << std::endl;
+		std::vector<double> _logspaced;
+		std::vector<int> logspaced;
+		for (int i = 0; i < num_in; ++i) { _logspaced.push_back(pow(ratio, i)); }
+		//std::cout << "_logspaced" << std::endl;
+		//std::for_each(_logspaced.begin(), _logspaced.end(), [](double x) {std::cout<< x <<" "; });
+		//std::cout << std::endl<< "_logspaced end" << std::endl;
+
+		for (int i = 0; i < num_in; ++i) { logspaced.push_back(floor(start_in+_logspaced[i]*diff/end_in)); }
 
 		return logspaced;
+
 	}
 
 
@@ -284,7 +300,13 @@ namespace DFALib
 			}
 			else
 			{
-				scales = XDFA::logspace(16, static_cast<int>(data.size()), n_scales);
+
+				//scale=np.floor(np.logspace(int(scale_min),(np.log(int(scale_max))/np.log(10)),int(scale_res)))       
+
+				scales = XDFA::logspace(16, log(8000)/log(10), n_scales);
+
+
+
 			}
 		}
 		else
@@ -390,16 +412,18 @@ namespace DFALib
 			F_.push_back(sqrt(XDFA::Arithmetic_Mean(F_aux)));
 			F_aux.clear();
 		}
-		std::cout << std::endl;
-		std::cout << " F result" << std::endl;
-		std::for_each(F_.begin(), F_.end(), [](double& x) {std::cout << x << " " << std::endl; });
-		std::cout << std::endl;
-		system("pause");
+
 
 		//std::vector<double> s_log;
 		for (double n : scales) { values.S_log.push_back(log(n)); }
 		//std::vector<double> F_log;
 		for (double n : F_) { values.F_log.push_back(log(n)); }
+
+		std::cout << std::endl;
+		std::cout << " F_log result" << std::endl;
+		std::for_each(values.F_log.begin(), values.F_log.end(), [](double& x) {std::cout << x << " " << std::endl; });
+		std::cout << std::endl;
+		system("pause");
 
 		std::vector<double> Ch = XDFA::polynomial_fit(values.S_log, values.F_log, degree);
 		values.H = Ch[0];
