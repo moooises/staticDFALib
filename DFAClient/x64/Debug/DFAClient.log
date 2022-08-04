@@ -1,1 +1,15 @@
-﻿  DFAClient.vcxproj -> C:\Users\mo_oi\source\repos\staticDFALib\x64\Debug\DFAClient.exe
+﻿  DFAClient.cpp
+C:\Users\mo_oi\source\repos\staticDFALib\DFAClient\DFAClient.cpp(111,40): warning C4244: 'argument': conversion from 'double' to 'const _Ty', possible loss of data
+          with
+          [
+              _Ty=int
+          ]
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.32.31326\include\algorithm(3635,25): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\mo_oi\source\repos\staticDFALib\DFAClient\DFAClient.cpp(112): message : see reference to function template instantiation 'void std::generate<std::_Vector_iterator<std::_Vector_val<std::_Simple_types<_Ty>>>,main::<lambda_1>>(_FwdIt,_FwdIt,_Fn)' being compiled
+          with
+          [
+              _Ty=int,
+              _FwdIt=std::_Vector_iterator<std::_Vector_val<std::_Simple_types<int>>>,
+              _Fn=main::<lambda_1>
+          ]
+  DFAClient.vcxproj -> C:\Users\mo_oi\source\repos\staticDFALib\x64\Debug\DFAClient.exe

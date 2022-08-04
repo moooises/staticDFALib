@@ -99,32 +99,12 @@ namespace DFALib
 
 	}
 
-	std::vector<int> XDFA::logspace(const int start_in, const int end_in, const int num_in)
+	std::vector<int> XDFA::logspace(const double start_in, const double end_in, const int num_in)
 	{
-		//const double exp_scale = (end_in - start_in) / (num_in - 1);
-		//std::vector<int> logspaced;
-		//logspaced.reserve(num_in);
-		//for (int i = 0; i < num_in; i++)
-		//{
-		//	logspaced.push_back(static_cast<int>(i * exp_scale)); // this used to be floor(), but floor return double ¿?¿?¿?¿
-		//}
-
-		//std::for_each(logspaced.begin(), logspaced.end(), [](int& x) {x = static_cast<int>(pow(10, x)); }); // pow returns always double
-
-		//return logspaced;
-
-		double diff = static_cast<double>(end_in) - static_cast<double>(start_in);
-		//std::cout << "Diff: " << diff << std::endl;
-		double ratio = pow(static_cast<double>(end_in), (1.0 / (static_cast<double>(num_in) - 1.0)));
-		//std::cout << "Ratio: " << ratio << std::endl;
-		std::vector<double> _logspaced;
-		std::vector<int> logspaced;
-		for (int i = 0; i < num_in; ++i) { _logspaced.push_back(pow(ratio, i)); }
-		//std::cout << "_logspaced" << std::endl;
-		//std::for_each(_logspaced.begin(), _logspaced.end(), [](double x) {std::cout<< x <<" "; });
-		//std::cout << std::endl<< "_logspaced end" << std::endl;
-
-		for (int i = 0; i < num_in; ++i) { logspaced.push_back(floor(start_in+_logspaced[i]*diff/end_in)); }
+		const auto exp_scale = (end_in - start_in) / (num_in - 1);
+		std::cout << exp_scale << std::endl;
+		std::vector<int> logspaced(num_in, 0.0);
+		std::generate(logspaced.begin(), logspaced.end(), [n = -1, exp_scale]() mutable {n++; return floor(10 * pow(10, n * exp_scale)); });
 
 		return logspaced;
 

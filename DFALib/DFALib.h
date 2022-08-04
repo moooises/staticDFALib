@@ -32,8 +32,9 @@ namespace DFALib
 		static std::vector<double> linspace(const T start_in, const T end_in, const int num_in);
 
 		// https://stackoverflow.com/questions/57944012/how-to-write-a-fast-code-in-c-compared-to-numpy-logspace-function
+		// https://quick-bench.com/q/8U0_F4-D01txhVD_DaySfULKi_E
 		// Aplicamos un floor en le vector resultado
-		static std::vector<int> logspace(const int start_in, const int end_in, const int num_in);
+		static std::vector<int> logspace(const double start_in, const double end_in, const int num_in);
 
 		// Used in polynomial_fit
 		// https://calculator-online.net/gaussian-elimination-calculator/

@@ -1,12 +1,18 @@
 ﻿  DFALib.cpp
-C:\Users\mo_oi\source\repos\staticDFALib\DFALib\DFALib.cpp(127,63): warning C4244: 'argument': conversion from 'double' to '_Ty', possible loss of data
+C:\Users\mo_oi\source\repos\staticDFALib\DFALib\DFALib.cpp(106,38): warning C4244: 'argument': conversion from 'double' to 'const _Ty', possible loss of data
           with
           [
               _Ty=int
           ]
-C:\Users\mo_oi\source\repos\staticDFALib\DFALib\DFALib.cpp(206,19): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\mo_oi\source\repos\staticDFALib\DFALib\DFALib.cpp(259,29): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\mo_oi\source\repos\staticDFALib\DFALib\DFALib.cpp(270,4): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\mo_oi\source\repos\staticDFALib\DFALib\DFALib.cpp(306,42): warning C4244: 'argument': conversion from 'double' to 'const int', possible loss of data
-C:\Users\mo_oi\source\repos\staticDFALib\DFALib\DFALib.cpp(435): message : see reference to function template instantiation 'DFALib::DFA_values DFALib::XDFA::DFA<int>(const std::vector<int,std::allocator<int>> &,const int,const std::vector<int,std::allocator<int>> &,const int)' being compiled
+C:\Users\mo_oi\source\repos\staticDFALib\DFALib\DFALib.cpp(186,19): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\mo_oi\source\repos\staticDFALib\DFALib\DFALib.cpp(239,29): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\mo_oi\source\repos\staticDFALib\DFALib\DFALib.cpp(250,4): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.32.31326\include\algorithm(3635,25): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\mo_oi\source\repos\staticDFALib\DFALib\DFALib.cpp(107): message : see reference to function template instantiation 'void std::generate<std::_Vector_iterator<std::_Vector_val<std::_Simple_types<_Ty>>>,DFALib::XDFA::logspace::<lambda_1>>(_FwdIt,_FwdIt,_Fn)' being compiled
+          with
+          [
+              _Ty=int,
+              _FwdIt=std::_Vector_iterator<std::_Vector_val<std::_Simple_types<int>>>,
+              _Fn=DFALib::XDFA::logspace::<lambda_1>
+          ]
   DFALib.vcxproj -> C:\Users\mo_oi\source\repos\staticDFALib\x64\Debug\DFALib.lib
