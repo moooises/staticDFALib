@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <stdexcept>
 #include <iostream>
+#include <execution>
 namespace DFALib
 {
 
@@ -22,7 +23,7 @@ namespace DFALib
 
 		// Return arithmetic mean of given data
 		template <typename T>
-		static double Arithmetic_Mean(const std::vector<T>& data);
+		static double Arithmetic_Mean(const std::vector<T>& data, const int parallel = 0);
 
 		// Convert the time series to random walk like time series
 		template <typename T>

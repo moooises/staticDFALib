@@ -4,6 +4,7 @@
 #include "DFALib.h"
 #include <fstream>
 #include <string>
+#include <chrono>
 
 //#include <cmath>
 #include <matplot/matplot.h>
@@ -16,41 +17,60 @@ int main()
 
     //// DFA test /////////////
 
-    //std::vector<double> data;
-    //std::fstream newfile;
-    ////std::string file = "C:/Users/mo_oi/source/repos/staticDFALib/DFAClient/Multifractal.txt";
-    ////std::string file = "C:/Users/mo_oi/source/repos/staticDFALib/DFAClient/O3_2017.dat";
-    ////std::string file = "C:/Users/mo_oi/source/repos/staticDFALib/DFAClient/O3_2018_reminder.dat";
-    //std::string file = "C:/Users/mo_oi/source/repos/staticDFALib/DFAClient/O3_2019.dat";
+    std::vector<double> data;
+    std::fstream newfile;
+    //std::string file = "C:/Users/mo_oi/source/repos/staticDFALib/DFAClient/Multifractal.txt";
+    //std::string file = "C:/Users/mo_oi/source/repos/staticDFALib/DFAClient/O3_2017.dat";
+    //std::string file = "C:/Users/mo_oi/source/repos/staticDFALib/DFAClient/O3_2018_reminder.dat";
+    std::string file = "C:/Users/mo_oi/source/repos/staticDFALib/DFAClient/O3_2019.dat";
 
 
-    ////newfile.open();
+    //newfile.open();
 
-    //if (newfile.is_open())
-    //{
-    //    std::string tp;
-    //    while (std::getline(newfile, tp, ','))
-    //    {
-    //        data.push_back(std::stold(tp)); // convert string to long double https://stackoverflow.com/questions/4754011/c-string-to-double-conversion
-    //    }
-    //}
-    //newfile.close();
+    if (newfile.is_open())
+    {
+        std::string tp;
+        while (std::getline(newfile, tp, ','))
+        {
+            data.push_back(std::stold(tp)); // convert string to long double https://stackoverflow.com/questions/4754011/c-string-to-double-conversion
+        }
+    }
+    newfile.close();
 
-    //std::cout << data.size() << std::endl;
-    //if (data.size() == 1 || data.size() == 0)
-    //{
-    //    data.clear();
-    //    newfile.open(file);
-    //    if (newfile.is_open())
-    //    {
-    //        std::string tp;
-    //        while (std::getline(newfile, tp))
-    //        {
-    //            data.push_back(std::stold(tp));
-    //        }
-    //    }
-    //    newfile.close();
-    //}
+    std::cout << data.size() << std::endl;
+    if (data.size() == 1 || data.size() == 0)
+    {
+        data.clear();
+        newfile.open(file);
+        if (newfile.is_open())
+        {
+            std::string tp;
+            while (std::getline(newfile, tp))
+            {
+                data.push_back(std::stold(tp));
+            }
+        }
+        newfile.close();
+    }
+
+    auto start1 = std::chrono::high_resolution_clock::now();
+
+    double result1 = DFALib::XDFA::Arithmetic_Mean(data);
+    auto end1 = std::chrono::high_resolution_clock::now();
+
+    std::cout << "Resultado sin paralelismo: " << result1 << std::endl;
+    std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(end1 - start1).count() << std::endl;
+
+    auto start2 = std::chrono::high_resolution_clock::now();
+
+    double result2 = DFALib::XDFA::Arithmetic_Mean(data, 1);
+
+    auto end2 = std::chrono::high_resolution_clock::now();
+
+    std::cout << "Resultado con paralelismo: " << result2 << std::endl;
+
+    std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(end2 - start2).count() << std::endl;
+
 
     //std::cout << "Data" << std::endl;
     //std::for_each(data.begin(), data.end(), [](double n) {std::cout << n << " "; });
@@ -103,15 +123,15 @@ int main()
 
     /////////////
     // Test logspace v4
-    double start_in=1;
-    double end_in =log(8000)/log(10);
-    int num_in=60;
-    const auto exp_scale = (end_in - start_in) / (num_in - 1);
-    std::cout << exp_scale << std::endl;
-    std::vector<int> logspaced(num_in, 0.0);
-    std::generate(logspaced.begin(), logspaced.end(), [n = -1, exp_scale]() mutable {n++; return floor(10*pow(10, n * exp_scale)); });
+    //double start_in=1;
+    //double end_in =log(8000)/log(10);
+    //int num_in=60;
+    //const auto exp_scale = (end_in - start_in) / (num_in - 1);
+    //std::cout << exp_scale << std::endl;
+    //std::vector<int> logspaced(num_in, 0.0);
+    //std::generate(logspaced.begin(), logspaced.end(), [n = -1, exp_scale]() mutable {n++; return floor(10*pow(10, n * exp_scale)); });
 
-    for (double x : logspaced) { std::cout << x << " "; }
+    //for (double x : logspaced) { std::cout << x << " "; }
 
 
 

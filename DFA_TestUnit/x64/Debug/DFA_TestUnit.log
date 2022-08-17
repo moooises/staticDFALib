@@ -1,3 +1,4 @@
-﻿  DFA_TestUnit.cpp
+﻿  pch.cpp
+  DFA_TestUnit.cpp
      Creating library C:\Users\mo_oi\source\repos\staticDFALib\x64\Debug\DFA_TestUnit.lib and object C:\Users\mo_oi\source\repos\staticDFALib\x64\Debug\DFA_TestUnit.exp
   DFA_TestUnit.vcxproj -> C:\Users\mo_oi\source\repos\staticDFALib\x64\Debug\DFA_TestUnit.dll

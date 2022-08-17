@@ -3,7 +3,7 @@
 namespace DFALib
 {
 	template <typename T>
-	double XDFA::Arithmetic_Mean(const std::vector<T>& data)
+	double XDFA::Arithmetic_Mean(const std::vector<T>& data, const int parallel)
 	{
 		//std::cout << "Arithmetic_Mean" << std::endl;
 
@@ -20,20 +20,44 @@ namespace DFALib
 			}
 		}
 
-		double acc = 0.0;
+		double acc_ = 0.0;
 
-		for (const T& n : data)
+		if (parallel == 0)
 		{
-			acc += static_cast<double>(n);
+
+			std::cout << "No paralelo" << std::endl;
+
+			// cambiar a for_each para incluir politicas de ejecucion #include<execution>
+			for (const T& n : data)
+			{
+				acc_ += static_cast<double>(n);
+			}
+
+			return acc_ / static_cast<double>(data.size());
+
+		}
+		else
+		{
+			//std::atomic<double> acc(0.0); // atomic value
+			std::mutex m;
+
+			std::cout << "Paralelo" << std::endl;
+			//std::for_each(std::execution::par_unseq, data.begin(), data.end(), [&acc](const T n) {acc.fetch_add(static_cast<double>(n),std::memory_order_relaxed); });
+			std::for_each(std::execution::par, data.begin(), data.end(), [&acc_, &m](const T n) {std::lock_guard<std::mutex> lock(m); acc_ += static_cast<double>(n); });
+
+			// Both mutex and atomic make it slower
+
+			return acc_ / static_cast<double>(data.size());
+
 		}
 
 
-		return acc / static_cast<double>(data.size());
+
 	}
 
-	template double XDFA::Arithmetic_Mean(const std::vector<int>&);
-	template double XDFA::Arithmetic_Mean(const std::vector<double>&);
-	template double XDFA::Arithmetic_Mean(const std::vector<float>&);
+	template double XDFA::Arithmetic_Mean(const std::vector<int>&, const int);
+	template double XDFA::Arithmetic_Mean(const std::vector<double>&, const int);
+	template double XDFA::Arithmetic_Mean(const std::vector<float>&, const int);
 
 	template<typename T>
 	std::vector<double> XDFA::Convert_to_Random_Walk(const std::vector<T>& data)
@@ -103,7 +127,7 @@ namespace DFALib
 	{
 		const auto exp_scale = (end_in - start_in) / (num_in - 1);
 		std::cout << exp_scale << std::endl;
-		std::vector<int> logspaced(num_in, 0.0);
+		std::vector<int> logspaced(num_in, 0);
 		std::generate(logspaced.begin(), logspaced.end(), [n = -1, exp_scale]() mutable {n++; return floor(10 * pow(10, n * exp_scale)); });
 
 		return logspaced;
@@ -183,13 +207,13 @@ namespace DFALib
 			}
 		}
 
-		int N = x.size();
+		size_t N = x.size();
 
 		double** M = new double* [n + 1];
 
 		// First row
 		M[0] = new double[n + 2];
-		M[0][0] = N;
+		M[0][0] = static_cast<double>(N);
 		for (int j = 1; j < n + 1; j++)
 		{
 			double sum = 0;
@@ -236,7 +260,7 @@ namespace DFALib
 
 	std::vector<double> XDFA::polynomial_val(const std::vector<double> coeficients, const std::vector<double> X)
 	{
-		int n = coeficients.size();
+		size_t n = coeficients.size();
 
 		std::vector<double> values;
 
@@ -247,7 +271,7 @@ namespace DFALib
 
 			polynomial = 0;
 
-			for (int j = coeficients.size() - 1; j >= 0; j--)
+			for (size_t j = coeficients.size() - 1; j >= 0; j--)
 			{
 				polynomial += coeficients[j] * pow(X[i], (coeficients.size() - 1) - j);
 			}
